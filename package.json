@@ -1,25 +1,39 @@
 {
-  "name": "DM-BOT",
-  "version": "1.0.0",
-  "description": "A discord bot that records direct messages and responds to them!",
-  "main": "index.js",
-  "repository": {
+    "name": "server-bot",
+    "version": "1.0.0",
+    "description": "A template for anyone to create a discord bot.",
+    "main": "index.js",
+    "repository": {
         "type": "git",
         "url": "git+https://github.com/toukagarry/server-bot.git"
     },
-  "engines": {
-    "node": "8.x",
-    "npm": "*"
-  },
-  "scripts": {
-    "start": "node dmBot.js"
-  },
-  "author": "livelysource",
-  "license": "MIT",
-  "dependencies": {
-    "discord.js": "^11.4.2",
+    "keywords": [
+        "nodejs",
+        "discord",
+        "discord-js",
+        "discord-bot",
+        "discord-bot-template",
+        "command-handler",
+        "bot"
+    ],
+    "author": "Asgarrrr",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/toukagarry/server-bot/issues"
+    },
+    "scripts": {
+        "start": "nodemon index.js",
+        "lint": "eslint . --ext .js"
+    },
+    "dependencies": {
+        "discord.js": "^11.4.2",
     "express": "^4.17.1",
     "fs": "0.0.1-security",
     "request": "^2.88.2"
-  }
+    },
+    "devDependencies": {
+        "eslint": "^7.18.0",
+        "stylelint": "^13.9.0",
+        "stylelint-config-standard": "^20.0.0"
+    }
 }
