@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "A discord bot that records direct messages and responds to them!",
   "main": "index.js",
+  "repository": {
+        "type": "git",
+        "url": "git+https://github.com/toukagarry/server-bot.git"
+    },
   "engines": {
     "node": "8.x",
     "npm": "*"
