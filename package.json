@@ -1,0 +1,22 @@
+{
+  "name": "DM-BOT",
+  "version": "1.0.0",
+  "description": "A discord bot that records direct messages and responds to them!",
+  "main": "index.js",
+  "engines": {
+    "node": "8.x",
+    "npm": "*"
+  },
+  "scripts": {
+    "start": "node dmBot.js"
+  },
+  "author": "livelysource",
+  "license": "MIT",
+  "homepage": "https://livelysource.tk/",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "request": "^2.88.2"
+  }
+}
