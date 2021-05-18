@@ -12,7 +12,6 @@
   },
   "author": "livelysource",
   "license": "MIT",
-  "homepage": "https://livelysource.tk/",
   "dependencies": {
     "discord.js": "^11.4.2",
     "express": "^4.17.1",
