@@ -1,6 +1,12 @@
 const fs = require('fs')
 
 const Discord = require("discord.js");
+const moment = require("moment");
+require("moment-duration-format");
+const Kitsu = require('kitsu.js');
+const kitsu = new Kitsu();
+var aq = require('animequote');
+
 
 const dmBot = new Discord.Client({
     cacheGuilds: true,
@@ -67,7 +73,7 @@ dmBot.on("message", (message) => {
     }else
     
      if (message.content.startsWith(config.PREFIX + "reply")) { 
-        if (message.author.id !== config.YOUR_ID) return message.reply('ok')
+        if (message.author.id !== config.YOUR_ID && message.author.id !== config.YOUR_ID1) return message.reply('ok')
         var args = message.content.split(" ").slice(0)
         var Rargs = message.content.split(" ").slice(2).join(" ")
         var userID = args[1]
@@ -85,7 +91,7 @@ dmBot.on("message", (message) => {
 
     }
 
-    if (message.content.startsWith(config.PREFIX + "rep")) {
+    if (message.content.startsWith(config.PREFIX + "r")) {
         if (message.author.id !== config.YOUR_ID1) return message.reply('ok')
         var args = message.content.split(" ").slice(0)
         var Rargs = message.content.split(" ").slice(2).join(" ")
@@ -113,7 +119,7 @@ dmBot.on("message", (message) => {
    if (message.content.startsWith(config.PREFIX + "botnick")) {
      const botnickname = message.content.split(' ').slice(1).join(' ');
 
-        if (message.author.id == '801462119308460133' || message.author.id == '783580267301699615') {
+        if (message.author.id == '443031944406630404' || message.author.id == '783580267301699615') {
             message.guild.members.get(dmBot.user.id).setNickname(botnickname);
             message.channel.send('Done. :ok_hand:');
         } else {
@@ -127,7 +133,7 @@ dmBot.on("message", (message) => {
             "encoding": null
         });
 
-        if (message.author.id == '801462119308460133' || message.author.id == '783580267301699615') {
+        if (message.author.id == '443031944406630404' || message.author.id == '783580267301699615') {
             request(botavatar, function (err, res, body) {
                 if (!err && res.statusCode === 200) {
                     var data = "data:" + res.headers["content-type"] + ";base64," + new Buffer(body).toString("base64");
@@ -152,6 +158,99 @@ dmBot.on("message", (message) => {
 
       message.channel.send(`__Uptime:__\n${days}d ${hours}h ${minutes}m ${seconds}s`);
       
+   }
+   if (message.content.startsWith(config.PREFIX + "anime")) {
+     var search = message.content.split(/\s+/g).slice(1).join(" ");
+        if (!search) {
+            kitsu.searchAnime(aq().quoteanime).then(result => {
+                var anime = result[0]
+                let embed = new Discord.RichEmbed()
+                    .setColor('#A65EA5')
+                    .setAuthor(`${anime.titles.english} | ${anime.showType}`, anime.posterImage.original)
+                    .setDescription(anime.synopsis.replace(/<[^>]*>/g, '').split('\n')[0])
+                    .addField('❯\u2000\Information', `•\u2000\**Japanese Name:** ${anime.titles.romaji}\n\•\u2000\**Age Rating:** ${anime.ageRating}\n\•\u2000\**NSFW:** ${anime.nsfw ? 'Yes' : 'No'}`, true)
+                    .addField('❯\u2000\Stats', `•\u2000\**Average Rating:** ${anime.averageRating}\n\•\u2000\**Rating Rank:** ${anime.ratingRank}\n\•\u2000\**Popularity Rank:** ${anime.popularityRank}`, true)
+                    .addField('❯\u2000\Status', `•\u2000\**Episodes:** ${anime.episodeCount ? anime.episodeCount : 'N/A'}\n\•\u2000\**Start Date:** ${anime.startDate}\n\•\u2000\**End Date:** ${anime.endDate ? anime.endDate : "Still airing"}`, true)
+                    .setImage(anime.posterImage.original);
+                return message.channel.send(`Try watching **${anime.titles.english}**!`, {
+                    embed: embed
+                });
+            })
+        }
+
+   }
+
+   if (message.content.startsWith(config.PREFIX + "whois")) {
+     let user = message.mentions.users.first() || message.author;
+        if (!user) {
+            return message.reply('You must mention someone!');
+        }
+        const mentioneduser = message.mentions.users.first() || message.author;
+        const joineddiscord = (mentioneduser.createdAt.getDate() + 1) + '-' + (mentioneduser.createdAt.getMonth() + 1) + '-' + mentioneduser.createdAt.getFullYear() + ' | ' + mentioneduser.createdAt.getHours() + ':' + mentioneduser.createdAt.getMinutes() + ':' + mentioneduser.createdAt.getSeconds();
+        let game;
+        if (user.presence.game === null) {
+            game = 'Not currently Playing.';
+        } else {
+            game = user.presence.game.name;
+        }
+        let messag;
+        if (user.lastMessage === null) {
+            messag = 'He didnt sent a message.';
+        } else {
+            messag = user.lastMessage;
+        }
+        let status;
+        if (user.presence.status === 'online') {
+            status = ':green_heart:';
+        } else if (user.presence.status === 'dnd') {
+            status = ':heart:';
+        } else if (user.presence.status === 'idle') {
+            status = ':yellow_heart:';
+        } else if (user.presence.status === 'offline') {
+            status = ':black_heart:';
+        }
+        // Let afk;
+        // if (user.presence.data.afk === true) {
+        //   afk = "✅"
+        // } else {
+        //   afk = "❌"
+        // }
+        let stat;
+        if (user.presence.status === 'offline') {
+            stat = 0x000000;
+        } else if (user.presence.status === 'online') {
+            stat = 0x00AA4C;
+        } else if (user.presence.status === 'dnd') {
+            stat = 0x9C0000;
+        } else if (user.presence.status === 'idle') {
+            stat = 0xF7C035;
+        }
+        message.channel.send({
+            embed: {
+                color: 3447003,
+                author: {
+                    name: `Got some info about ${user.username}`,
+                    icon_url: "https://cdn.discordapp.com/emojis/843940057761054762.gif?v=1"
+                },
+                thumbnail: {
+		url: user.displayAvatarURL,
+	},
+                fields: [{
+                        name: '**UserInfo:**',
+                        value: `**Username:** ${user.tag}\n**Joined Discord:** ${joineddiscord}\n**Playing:** ${game}\n**Status:** ${status}\n**Bot?** ${user.bot}`
+                    },
+                    {
+                        name: 'DiscordInfo:',
+                        value: `**Discriminator:** ${user.discriminator}\n**ID:** ${user.id}\n**Username:** ${user.username}`
+                    },
+                ],
+                timestamp: new Date(),
+                footer: {
+                    icon_url: dmBot.user.avatarURL,
+                    text: "© pokevil"
+                }
+            }
+        });
    }
     
 });
